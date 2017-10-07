@@ -23,6 +23,13 @@ cc.Class({
         this.ySpeed = 0;
 
         this.setInputControl();
+
+        //ball
+        this.ballSize = 127 / 2;
+
+        //canvas
+        this.width = 960 / 2;
+        this.height = 640 / 2;
     },
 
     setInputControl: function setInputControl() {
@@ -76,17 +83,25 @@ cc.Class({
 
         // update speed of each frame according to the current acceleration direction
         if (this.accLeft) {
-            this.xSpeed += this.acceleration * 10 * dt;
+            this.xSpeed -= this.acceleration * 50 * dt;
+
+            if (this.node.x <= -1 * this.width + this.ballSize) this.xSpeed = 0;
         } else if (this.accRight) {
-            this.xSpeed -= this.acceleration * 10 * dt;
+            this.xSpeed += this.acceleration * 50 * dt;
+
+            if (this.node.x <= -1 * this.width + this.ballSize) this.xSpeed = 0;
         } else {
             this.xSpeed = 0;
         }
         // up and down
         if (this.accUp) {
-            this.ySpeed += this.acceleration * 10 * dt;
+            this.ySpeed += this.acceleration * 50 * dt;
+
+            if (this.node.y >= this.height - this.ballSize) this.ySpeed = 0;
         } else if (this.accDown) {
-            this.ySpeed -= this.acceleration * 10 * dt;
+            this.ySpeed -= this.acceleration * 50 * dt;
+
+            if (this.node.y <= -1 * this.height + this.ballSize) this.ySpeed = 0;
         } else {
             this.ySpeed = 0;
         }
